@@ -23,13 +23,19 @@ equation = insert_multiplication(equation)
 
 
 array_10x10 = [[" " for _ in range(10)] for _ in range(10)]
-for i in range(10):
+for x in range(10):
     #print('for x = ', i, ', y = ', evaluate(equation, i))
-    solution = int(evaluate(equation, i))
-    solution_last_y = int(evaluate(equation, i-1))
-    if (solution < 10 and solution >= 0):
-        array_10x10[solution][i] = "*"
-        
+    y = int(evaluate(equation, x))
+    y_last_x = int(evaluate(equation, x-1))
+    if (y < 10 and y >= 0):
+        array_10x10[y][x] = "*"
+        if (abs(y_last_x-y) > 1):
+            if (y > y_last_x):
+                for i in range(min(y, y_last_x + 1), max(y, y_last_x + 1)):
+                    array_10x10[i][x] = "*"
+            else:
+                for i in range(min(y, y_last_x), max(y, y_last_x)):
+                    array_10x10[i][x] = "*"
         
 
 
