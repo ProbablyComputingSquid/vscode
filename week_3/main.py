@@ -22,22 +22,30 @@ def getInputs():
             return data
 def renderBarGraph(data):
     # data should be in dictionary format
-    text = data["name"].center(WIDTH)
-    print(text)
-    
-    max_value = max(data["values"])
-    max_category_string_length = max([len(category) for category in data["categories"]])
+    title = data["name"].center(WIDTH)    
+    max_value = max(data["values"]) # max value in the values list
+    max_category_string_length = max([len(category) for category in data["categories"]]) + 1 # max length of the categories to align properly
+    # 1 is for the space
+    print(title)
     print("-" * WIDTH)
+    # print the bars and categories
     for category, value in zip(data["categories"], data["values"]):
         bar = "*" * int((value / max_value) * (WIDTH - max_category_string_length - 2))
         string_buffer = " " * (max_category_string_length - len(category))
-        print(f"{category}{string_buffer}| {bar}")
+        if value == max_value:
+            print(f"{category}{string_buffer}| {bar.replace('***', '', 1)} {str(value)}")
+        else:
+            print(f"{category}{string_buffer}| {bar}{"" if value == max_value else " " + str(value)}")
     
 
 data = {
-        "name": "test",
-        "categories": ["apple","banana","cherry","date"],
-        "values": [6,2,5,9]
+        "name": "favorite fruits graph",
+        "categories": ["apple","banana","cherry","date", "eggs and rasins"],
+        "values": [9,2,5,3,1]
 }
+renderBarGraph(data)
+# actual user input
+print("example graph: ")
 renderBarGraph(getInputs())
-#renderBarGraph(data)
+# fake data for testing LOL
+
